@@ -1,9 +1,11 @@
-'''
-Created on 24/07/2013
 
-@author: xtreme
-'''
 # -*- coding: utf-8 -*-
+'''
+Created on 26/07/2013
+
+@author: M@RVIN
+
+'''
 
 # Form implementation generated from reading ui file 'qtablero.ui'
 #
@@ -14,13 +16,18 @@ Created on 24/07/2013
 
 
 from PyQt4 import QtCore, QtGui
-from tkinter import *
+
 import random
 from copy import deepcopy
 import time
+import threading
 import sys
+import base64
 
-
+global segundos
+segundos =0
+global minutos
+minutos=0
 try:
     _fromUtf8 = QtCore.QString.fromUtf8
 except AttributeError:
@@ -43,7 +50,7 @@ class Ui_QTablero(QtGui.QMainWindow):
         QTablero.setObjectName(_fromUtf8("QTablero"))
         QTablero.resize(750, 522)
         QTablero.setAcceptDrops(True)
-        
+        self.bandera=0
         self.centralWidget = QtGui.QWidget(QTablero)
         self.centralWidget.setObjectName(_fromUtf8("centralWidget"))
         self.gridLayoutWidget = QtGui.QWidget(self.centralWidget)
@@ -229,28 +236,45 @@ class Ui_QTablero(QtGui.QMainWindow):
             linea=line.split(',')
             self.tableroresuelto.append(linea)
             i=i+1
-            print ("\n")
-        self.contpuntos="0"
+            #print ("\n")
+            
+        f1=open("sudoku1.txt","r")
+
+        self.tableronumeros=[]
+        for line in f1:
+            i=0
+    
+            lines=[]
+            linea=line.split(',')
+            while i<9:
+                numero = QtGui.QLineEdit(linea[i])
+                #print (linea[i])
+                lines.append(numero)
+                i=i+1
+            self.tableronumeros.append(lines)
+        self.contpuntos=str(0)
+        #self.lcdNumber.setPalette(QtGui.QPalette.Normal,QtGui.QPalette.WindowText,QtGui.)
+        self.puntos= QtGui.QLabel(self.contpuntos)
+        self.hilo= threading.Thread(target=self.crono, args=())
         self.tablero=deepcopy(self.tableroresuelto)
         self.habilitados= deepcopy(self.tableroresuelto)
         self.tablero_original= deepcopy(self.tableroresuelto)
-        self.verificarficha()
+        #self.verificarficha()
         self.partidanueva(self.dif)
-        self.ayudaboton()
-        self.verificar_fila(6,4)
-        self.verificar_columna(5,4)
-        self.verificarsubcuadricula(5,3,6)
-        self.on_pushbutton_2_clicked()
-        #self.control_ingreso_ficha()
         self.retranslateUi(QTablero)
         self.connect(self.pushButton_2, QtCore.SIGNAL("clicked()"), self.on_pushbutton_2_clicked)
         self.connect(self.pushButton, QtCore.SIGNAL("clicked()"), self.ayudaboton)
         self.connect(self.pushButton_4, QtCore.SIGNAL("clicked()"), self.guardar)
+        self.connect(self.pushButton_6, QtCore.SIGNAL("clicked()"), self.salir)
         QtCore.QMetaObject.connectSlotsByName(QTablero)
         self.ll= QtGui.QLineEdit()
         print(self.nombre)
 
 
+    
+            
+            
+        
     def settablero(self,set):
         i=0
         j=0
@@ -261,56 +285,34 @@ class Ui_QTablero(QtGui.QMainWindow):
             if set==0:
              if int( self.habilitados[i][j])!=0:
                  self.habilitados[i][j]="1"
-             print ( self.habilitados[i][j])
-             print ( self.tablero_original[i][j])
-             print (self.tablero[i][j])
-             line=QtGui.QLineEdit(self.tablero[i][j])
-
+             #print ( self.habilitados[i][j])
+             #print ( self.tablero_original[i][j])
+             #print (self.tablero[i][j])
              if int(self.habilitados[i][j])==1:
-                 line.setEnabled(False)
-             if int(self.tablero[i][j])==0:
-                 line.setText("")
-                 line.setMaxLength(1)
-                 line.setValidator(ind)
+                 self.tableronumeros[i][j].setEnabled(False)
+             if int(self.tableronumeros[i][j].text())==0:
+                 print("AQUI CMBIO ESTA WEVADA")
+                 self.tableronumeros[i][j].setMaxLength(1)
+                 self.tableronumeros[i][j].setValidator(ind)
              if i>=0 and i<=2 and j>=0 and j<=2:
-                self.celda1.addWidget(line,i,j)
+                self.celda1.addWidget(self.tableronumeros[i][j],i,j)
              if i>=0 and i<=2 and j>=3 and j<=5:
-                    self.celda2.addWidget(line,i,j)
+                    self.celda2.addWidget(self.tableronumeros[i][j],i,j)
              if i>=0 and i<=2 and j>=6 and j<=8:
-                   self.celda3.addWidget(line,i,j)
+                   self.celda3.addWidget(self.tableronumeros[i][j],i,j)
              if i>=3 and i<=5 and j>=0 and j<=2:
-                   self.celda4.addWidget(line,i,j)
+                   self.celda4.addWidget(self.tableronumeros[i][j],i,j)
              if i>=3 and i<=5 and j>=3 and j<=5:
-                   self.celda5.addWidget(line,i,j)
+                   self.celda5.addWidget(self.tableronumeros[i][j],i,j)
              if i>=3 and i<=5 and j>=6 and j<=8:
-                   self.celda6.addWidget(line,i,j)
+                   self.celda6.addWidget(self.tableronumeros[i][j],i,j)
              if i>=6 and i<=8 and j>=0 and j<=2:
-                   self.celda7.addWidget(line,i,j)
+                   self.celda7.addWidget(self.tableronumeros[i][j],i,j)
              if i>=6 and i<=8 and j>=3 and j<=5:
-                   self.celda8.addWidget(line,i,j)
+                   self.celda8.addWidget(self.tableronumeros[i][j],i,j)
              if i>=6 and i<=8 and j>=6 and j<=8:
-                   self.celda9.addWidget(line,i,j)
-            #if set==1:
-             #   if i>=0 and i<=2 and j>=0 and j<=2:
-              #    self.celda1.removeWidget(line,i,j)
-               # if i>=0 and i<=2 and j>=3 and j<=5:
-                #    self.celda2.removeWidget(line,i,j)
-       #         if i>=0 and i<=2 and j>=6 and j<=8:
-        #           self.celda3.removeWidget(line,i,j)
-         #       if i>=3 and i<=5 and j>=0 and j<=2:
-          #         self.celda4.removeWidget(line,i,j)
-           #     if i>=3 and i<=5 and j>=3 and j<=5:
-            #       self.celda5.removeWidget(line,i,j)
-             #   if i>=3 and i<=5 and j>=6 and j<=8:
-              #     self.celda6.removeWidget(line,i,j)
-               # if i>=6 and i<=8 and j>=0 and j<=2:
-       #            self.celda7.removeWidget(line,i,j)
-        #        if i>=6 and i<=8 and j>=3 and j<=5:
-         #          self.celda8.removeWidget(line,i,j)
-          #      if i>=6 and i<=8 and j>=6 and j<=8:
-           #        self.celda9.removeWidget(line,i,j)
-
-
+                   self.celda9.addWidget(self.tableronumeros[i][j],i,j)
+            
             j=j+1
 
           i=i+1
@@ -318,33 +320,29 @@ class Ui_QTablero(QtGui.QMainWindow):
     def partidanueva(self, d):
         self.a =0
         if d==3:
-          self.a=69
+            self.a=69
         if d==2:
-          self.a=56
+            self.a=56
         if d==1:
-          self.a=38
-        
-
+            self.a=38
+        self.hilo.start()
+        self.lcdNumber.display(str(segundos))
         self.gridLayout_2.addWidget(QtGui.QLabel("Jugador:"),1,0)
         self.gridLayout_2.addWidget(QtGui.QLabel(self.nombre),1,1)
         self.gridLayout_2.addWidget(QtGui.QLabel("Puntaje:"),2,0)
-        self.gridLayout_2.addWidget(QtGui.QLabel(self.contpuntos),2,1)
-
-#carga el archivo
-
+        self.gridLayout_2.addWidget(self.puntos,2,1)
+         #carga el archivo
         i=0
         j=0
-
-#ingresa 0 los numeros aleatoriamente
-
+      #ingresa 0 los numeros aleatoriamente
         k=0
         while k<self.a:
-            print(self.a)
-            print(k)
             x = random.randrange(0, 9)
             y= random.randrange(0, 9)
             if int(self.tablero[x][y])!=0 :
                 self.habilitados[x][y]="0"
+                self.tableronumeros[x][y].setText("0")
+                self.tablero_original[x][y]="0"
                 self.tablero[x][y]="0"
             k=k+1
 #ingresa las fichas al tablero
@@ -357,13 +355,16 @@ class Ui_QTablero(QtGui.QMainWindow):
         b=0
         j=0
         while j<9:
-            if   int(self.tablero[j][m])!=0:
+            if   int(self.tableronumeros[j][m].text())!=0:
                 b=b+1
+                if int(self.tableronumeros[j][m].text())==ficha:
+                    num=num+1
             if num>1:
                 return 0
             j=j+1
-        #if b==9:
-            ##aqui van los puntajes para q valla aumentando
+        if b==9:
+            self.contpuntos= str(int(self.contpuntos)+40)
+            self.puntos.setText(self.contpuntos)
         print("sale de verificar fila")    
         return 1
 
@@ -374,195 +375,207 @@ class Ui_QTablero(QtGui.QMainWindow):
         b=0
         j=0
         while j<9:
-            if int(self.tablero[l][j])!=0:
-               b=b+1
-            if int(self.tablero[l][j])== ficha:
-               num=num+1
+            if int(self.tableronumeros[l][j].text())!=0:
+                b=b+1
+                if int(self.tableronumeros[l][j].text())== ficha:
+                    num=num+1
+            if num>1:
+                return 0 #☻numero repetido
             j=j+1
-        if num>1:
-            return 0
-            #if b==9
-            #aqui van las lineas para cambiar el puntaje
+        if b==9:
+            self.contpuntos= str(int(self.contpuntos)+40)
+            self.puntos.setText(self.contpuntos)
         print("sale de verificar col") 
-        return 1
+        return 1 #numero unico
 
 
     def verificarsubcuadricula(self,ficha,l,m):
         print("entra de verificar sub") 
+        print(l,m) 
         if l<=2 and m<=2:
-           b=0
-           num=0
-           i=0
-           j=0
-           while i<3:
-             while j<3:
-               if int(self.tablero[i][j]) !=0:
-                  b=b+1
-               if(b==9):
-                   ##aumentan puntaje y setea los puntos
-                   a=0
-               if int(self.tablero[i][j])==ficha:
-                   num=num+1
-               j=j+1
-             i=i+1
-             if num>1:
-                 return 0
+            b=0
+            num=0
+            i=0
+            j=0
+            while i<3:
+                j=0
+                while j<3:
+                    if int(self.tableronumeros[i][j].text()) !=0:
+                        b=b+1
+                        if int(self.tableronumeros[i][j].text())==ficha:
+                            num=num+1
+                    j=j+1
+                i=i+1
+            if(b==9):
+                self.contpuntos= str(int(self.contpuntos)+40)
+                self.puntos.setText(self.contpuntos)
+            if num>1:
+                return 0
 
-        if l<=2 and m<=3 and m<=5:
-           b=0
-           num=0
-           i=0
-           j=3
-           while i<3:
-             while j<6:
-               if int(self.tablero[i][j]) !=0:
-                  b=b+1
-               if(b==9):
-                   ##aumentan puntaje y setea los puntos
-                   a=0
-               if int(self.tablero[i][j])==ficha:
-                   num=num+1
-               j=j+1
-             i=i+1
-             if num>1:
-                 return 0
-
-        if l<=2 and m<=6 and m<=8:
-           b=0
-           num=0
-           i=0
-           j=6
-           while i<3:
-             while j<9:
-               if int(self.tablero[i][j]) !=0:
-                  b=b+1
-               if(b==9):
-                   ##aumentan puntaje y setea los puntos
-                   a=0
-               if int(self.tablero[i][j])==ficha:
-                   num=num+1
-               j=j+1
-             i=i+1
-             if num>1:
-                 return 0
-
-        if l<=3 and l<=5  and m<=2:
+        if l<=2 and m>=3 and m<=5:
            b=0
            num=0
            i=3
            j=0
            while i<6:
+             j=0
              while j<3:
-               if int(self.tablero[i][j]) !=0:
+               if int(self.tableronumeros[i][j].text()) !=0:
                   b=b+1
-               if(b==9):
-                   ##aumentan puntaje y setea los puntos  a no vale XD
-                   a=0
-               if int(self.tablero[i][j])==ficha:
+                  if int(self.tableronumeros[i][j].text())==ficha:
                    num=num+1
+               if(b==9):
+                   self.contpuntos= str(int(self.contpuntos)+40)
+                   self.puntos.setText(self.contpuntos)
                j=j+1
              i=i+1
-             if num>1:
-                 return 0
+           if num>1:
+               return 0
 
-        if l<=3 and l<=5 and m<=3 and m<=5:
-           b=0
-           num=0
-           i=3
-           j=3
-           while i<6:
-             while j<6:
-               if int(self.tablero[i][j]) !=0:
-                  b=b+1
-               if(b==9):
-                   ##aumentan puntaje y setea los puntos
-                   a=0
-               if int(self.tablero[i][j])==ficha:
-                   num=num+1
-               j=j+1
-             i=i+1
-             if num>1:
-                 return 0
-
-
-        if l<=3 and l<=5 and m<=6 and m<=8:
-           b=0
-           num=0
-           i=3
-           j=6
-           while i<6:
-             while j<9:
-               if int(self.tablero[i][j]) !=0:
-                  b=b+1
-               if(b==9):
-                   ##aumentan puntaje y setea los puntos
-                   a=0
-               if int(self.tablero[i][j])==ficha:
-                   num=num+1
-               j=j+1
-             i=i+1
-             if num>1:
-                 return 0
-
-
-        if l<=6 and l<=8 and m<=2:
+        if l<=2 and m>=6 and m<=8:
            b=0
            num=0
            i=6
            j=0
            while i<9:
+             j=0
              while j<3:
-               if int(self.tablero[i][j]) !=0:
+               if int(self.tableronumeros[i][j].text()) !=0:
                   b=b+1
-               if(b==9):
-                   ##aumentan puntaje y setea los puntos
-                   a=0
-               if int(self.tablero[i][j])==ficha:
+                  if int(self.tableronumeros[i][j].text())==ficha:
                    num=num+1
+               if(b==9):
+                   self.contpuntos= str(int(self.contpuntos)+40)
+                   self.puntos.setText(self.contpuntos)
                j=j+1
              i=i+1
-             if num>1:
-                 return 0
+           if num>1:
+                return 0
+
+        if l>=3 and l<=5  and m<=2:
+           b=0
+           num=0
+           i=0
+           j=3
+           while i<3:
+             j=3
+             while j<6:
+               if int(self.tableronumeros[i][j].text()) !=0:
+                  b=b+1
+                  if int(self.tableronumeros[i][j].text())==ficha:
+                   num=num+1
+               if(b==9):
+                   self.contpuntos= str(int(self.contpuntos)+40)
+                   self.puntos.setText(self.contpuntos)
+               j=j+1
+             i=i+1
+           if num>1:
+               return 0
+
+        if l>=3 and l<=5 and m>=3 and m<=5:
+           b=0
+           num=0
+           i=3
+           j=3
+           while i<6:
+             j=3
+             while j<6:
+               if int(self.tableronumeros[i][j].text()) !=0:
+                  b=b+1
+                  if int(self.tableronumeros[i][j].text())==ficha:
+                   num=num+1
+               if(b==9):
+                   self.contpuntos= str(int(self.contpuntos)+40)
+                   self.puntos.setText(self.contpuntos)
+               j=j+1
+             i=i+1
+           if num>1:
+               return 0
 
 
-        if l<=6 and l<=8 and m<=3 and m<=5:
+        if l>=3 and l<=5 and m>=6 and m<=8:
            b=0
            num=0
            i=6
            j=3
            while i<9:
+             j=3
              while j<6:
-               if int(self.tablero[i][j]) !=0:
+               if int(self.tableronumeros[i][j].text()) !=0:
                   b=b+1
-               if(b==9):
-                   ##aumentan puntaje y setea los puntos
-                   a=0
-               if int(self.tablero[i][j])==ficha:
+                  if int(self.tableronumeros[i][j].text())==ficha:
                    num=num+1
+               if(b==9):
+                   self.contpuntos= str(int(self.contpuntos)+40)
+                   self.puntos.setText(self.contpuntos)
                j=j+1
              i=i+1
-             if num>1:
-                 return 0
+           if num>1:
+               return 0
 
 
-        if l<=6 and l<=8 and m<=6 and m<=8:
+        if l>=6 and l<=8 and m<=2:
+           b=0
+           num=0
+           i=0
+           j=6
+           while i<3:
+             j=6
+             while j<9:
+               if int(self.tableronumeros[i][j].text()) !=0:
+                  b=b+1
+                  if int(self.tableronumeros[i][j].text())==ficha:
+                   num=num+1
+               if(b==9):
+                   self.contpuntos= str(int(self.contpuntos)+40)
+                   self.puntos.setText(self.contpuntos)
+               j=j+1
+             i=i+1
+           if num>1:
+               return 0
+
+
+        if l>=6 and l<=8 and m>=3 and m<=5:
+           b=0
+           num=0
+           i=3
+           j=6
+           while i<6:
+             j=6
+             while j<9:
+               if int(self.tableronumeros[i][j].text()) !=0:
+                  b=b+1
+                  if int(self.tableronumeros[i][j].text())==ficha:
+                   num=num+1
+                   print()
+               if(b==9):
+                   self.contpuntos= str(int(self.contpuntos)+40)
+                   self.puntos.setText(self.contpuntos)
+               j=j+1
+             i=i+1
+           if num>1:
+               return 0
+
+
+        if l>=6 and l<=8 and m>=6 and m<=8:
            b=0
            num=0
            i=6
            j=6
            while i<9:
+             j=6
              while j<9:
-               if int(self.tablero[i][j]) !=0:
+               if int(self.tableronumeros[i][j].text()) !=0:
                   b=b+1
-               if(b==9):
-                   ##aumentan puntaje y setea los puntos
-                   a=0
-               if int(self.tablero[i][j])==ficha:
+                  if int(self.tableronumeros[i][j].text())==ficha:
                    num=num+1
+               if(b==9):
+                   self.contpuntos= str(int(self.contpuntos)+40)
+                   self.puntos.setText(self.contpuntos)
                j=j+1
              i=i+1
-             if num>1:
-                 return 0
+           if num>1:
+               return 0
         print("sale de verificar sub") 
         return 1
 
@@ -572,14 +585,16 @@ class Ui_QTablero(QtGui.QMainWindow):
         i=0
         j=0
         while i<9:
-          while j<9:
-            if int(self.tablero[i][j])==0:
-                  b=b+1
-            j=j+1
-          i=i+1
+            j=0
+            while j<9:
+                if int(self.tableronumeros[i][j].text())==0:
+                    b=b+1
+                j=j+1
+            i=i+1
         if b==0:
-            ##aqui van los puntajes
-              QtGui.QMessageBox.information( self,"sudoku message","Hola k ase",QtGui.QMessageBox.Ok)
+            self.contpuntos= str(int(self.contpuntos)+60)
+            self.puntos.setText(self.contpuntos)
+            QtGui.QMessageBox.information( self,"sudoku message","Felicitaciones ha finalizado el juego su puntaje es"+(self.contpuntos),QtGui.QMessageBox.Ok)
          
 
     def control_ingreso_ficha(self):
@@ -587,27 +602,29 @@ class Ui_QTablero(QtGui.QMainWindow):
         j=0
         
         while i<9:
+            j=0
             while j<9:
                 k=0
-                if int(self.tablero_original[i][j])!= int( self.tablero[i][j]):
-                   
-                    if  self.verificar_fila(int( self.tablero[i][j]),j)==0:
-                        if int( self.tablero[i][j])!=0:
-                            QtGui.QMessageBox.information( QTablero,"sudoku message","número repetido en fila",QtGui.QMessageBox.Ok)
-                    if self.verificar_fila(int( self.tablero[i][j]),j)!=0:
+                print (self.tablero_original[i][j] ,self.tableronumeros[i][j].text() )
+                
+                if int(self.tablero_original[i][j])!= int(self.tableronumeros[i][j].text()):
+                    if  self.verificar_fila(int( self.tableronumeros[i][j].text()),j)==0:
+                        QtGui.QMessageBox.information(self,"sudoku message","número "+self.tableronumeros[i][j].text()+" repetido en columna",QtGui.QMessageBox.Ok)
+                    if self.verificar_fila(int( self.tableronumeros[i][j].text()),j)!=0:
                         k=k+1
-                    if  self.verificar_columna(int( self.tablero[i][j]),i)==0:
-                        if int( self.tablero[i][j])!=0:
-                             QtGui.QMessageBox.information( QTablero,"sudoku message","número repetido en columna",QtGui.QMessageBox.Ok)
-                    if  self.verificar_columna(int( self.tablero[i][j]),i)!=0:
+                    if  self.verificar_columna(int( self.tableronumeros[i][j].text()),i)==0:
+                        QtGui.QMessageBox.information( self,"sudoku message","número "+self.tableronumeros[i][j].text()+" repetido en fila",QtGui.QMessageBox.Ok)
+                    if  self.verificar_columna(int( self.tableronumeros[i][j].text()),i)!=0:
                         k=k+1
-                    if   self.verificarsubcuadricula(int( self.tablero[i][j]),i,j)==0:
-                        if int( self.tablero[i][j])!=0:
-                            QtGui.QMessageBox.information( QTablero,"sudoku message","número repetido en subcuadricula",QtGui.QMessageBox.Ok)
-                    if   self.verificarsubcuadricula(int( self.tablero[i][j]),i,j)==0:
+                    if   self.verificarsubcuadricula(int( self.tableronumeros[i][j].text()),j,i)==0:
+                        QtGui.QMessageBox.information( self,"sudoku message","número "+self.tableronumeros[i][j].text()+" repetido en subcuadricula",QtGui.QMessageBox.Ok)
+                    if   self.verificarsubcuadricula(int(self.tableronumeros[i][j].text()),j,i)!=0:
                         k=k+1
+                        
                 if k==3:
-                    self.tablero_original[i][j]= self.tablero[i][j]
+                    self.tablero_original[i][j]= self.tableronumeros[i][j].text()
+                    self.contpuntos= str(int(self.contpuntos)+20)
+                    self.puntos.setText(self.contpuntos) 
                     #aqui debe ir aumentando puntaje y seteando
                 j=j+1
             i=i+1
@@ -622,6 +639,123 @@ class Ui_QTablero(QtGui.QMainWindow):
 
 
 
+    
+    def encriptar(self ):
+        f4=open("./save/jugadores.txt","a")
+        f3=open("./save/"+self.nombre+".txt","w")
+        nombre= base64.encodestring(self.nombre)
+        f4.write(self.nombre+'\n')
+        f3.write(nombre)
+        f3.write(self.contpuntos)
+        f3.write(str(minutos))
+        f3.write(str(segundos))
+        i=0
+        
+        while i<9:
+            j=0
+            while j<9:
+                valor=self.tableroresuelto[i][j]
+                valor=base64.encodestring(valor)            
+                f3.write(valor)
+                j=j+1
+            i=i+1
+                
+        i=0    
+        while i<9:
+            j=0
+            while j<9:
+                valor = self.tableronumeros[i][j]
+                valor=base64. encodestring(valor.text())
+                f3.write(valor)
+                j=j+1
+            i=i+1
+            
+        f3.close()
+        f4.close()
+            
+    '''
+    def desencriptar(Nombre, ListaCom, ListaU):
+        f=open("Sudoku2.0.txt","r")
+        bandera=0
+        bandera2=0
+        j=9
+        contador=0
+        for line in f:
+            nombre = base64.decodestring(line)
+            if nombre==Nombre:
+                bandera=1
+            if bandera==1 and not bandera2==82:
+                if j==9:
+                    list2=[]
+                    j=0
+                numero = base64.decodestring(line)
+                list2.append(numero)
+                if j==8:
+                    ListaCom.append(list2)
+                j=j+1
+                contador=contador+1
+                if contador==82:
+                    bandera2=82
+            if bandera2==82:
+                if j==9:
+                    list2=[]
+                    j=0
+                numero = base64.decodestring(line)
+                numeronew=QtGui.QLineEdit(numero)
+                list2.append(numeronew)
+                if j==8:
+                    ListaU.append(list2)
+                j=j+1
+                contador=contador+1
+            
+       
+
+    def imprimir (lista):
+        h=0
+        j=0
+        while h<9:
+            j=0
+            while j<9:
+                valor=lista[h][j]
+                if isinstance(valor,QtGui.QLineEdit):
+                    print valor.text()
+                j=j+1
+            h=h+1
+                    
+        
+    f=open("ola k ase.txt","r")
+    g=open("Probando encriptacion.txt","r")      
+    
+    lines4=[]
+    lines2=[]
+    for line in f:
+        i=0
+        lines3=[]
+        lines=[]
+        linea=line.split(',')
+        
+        while i<9:
+            numero = QtGui.QLineEdit(linea[i])
+            #print linea[i]
+            lines.append(numero)
+            i=i+1
+        for item in linea:
+            if not item == '\n':
+                lines3.append(item)
+        lines2.append(lines)#valiste x ponerlo arriba jajaja .i.
+        lines4.append(lines3)
+        #g.write(base64.encodestring(line))
+    #imprimir(lines2)
+    encriptar(lines4, lines2, "Marlon")
+    lines4=[]
+    lines2=[]
+    desencriptar("Marlon",lines4,lines2)
+    imprimir(lines2)
+    
+
+'''
+
+
 
     def ayudaboton(self):
         
@@ -630,11 +764,13 @@ class Ui_QTablero(QtGui.QMainWindow):
             x = random.randrange(0, 9)
             y= random.randrange(0, 9)
             print(self.tablero[x][y])
-            if int(self.tablero[x][y])!=0 :
+            if int(self.tableronumeros[x][y].text())!=0 :
                 print ("hla ayuda4", self.tablero[x][y],x,y)
                 i=i-1
-            if int(self.tablero[x][y])==0 :
+            if int(self.tableronumeros[x][y].text())==0 :
+                self.tableronumeros[x][y].setText(self.tableroresuelto[x][y])
                 self.tablero[x][y]=self.tableroresuelto[x][y]
+                self.tablero_original[x][y]=self.tableroresuelto[x][y]
                 # self.ayudaudaboton(1)
                 print ("hla ayuda",self.tablero[x][y],x,y)
                 i=1
@@ -653,10 +789,34 @@ class Ui_QTablero(QtGui.QMainWindow):
         self.actionExit.setText(_translate("QTablero", "Exit", None))
 
     def guardar(self):
+        self.encriptar()
         QtGui.QMessageBox.information( self,"sudoku message","Su juego se ha guardado exitosamente",QtGui.QMessageBox.Ok)
         
-
-
+        
+    def salir(self):
+        self.bandera=1
+        #exit()
+        
+    def crono(self):
+        global segundos
+        global minutos
+        segundos=int(segundos)
+        
+            
+        if segundos==60 :
+            segundos=0
+            minutos+=1
+            self.lcdNumber.display(str(segundos))
+            return self.crono()
+        if  self.bandera==0:
+            segundos+=1
+            time.sleep(1)
+            print("tiempo"+str(segundos))
+            self.lcdNumber.display(str(minutos)+":"+str(segundos))
+            return self.crono()
+            
+        
+        
 class Ui_nivel(QtGui.QMainWindow):
     def setupUi(self, nivel):
         nivel.setObjectName(_fromUtf8("nivel"))
@@ -697,6 +857,7 @@ class Ui_nivel(QtGui.QMainWindow):
         self.label_2.setGeometry(QtCore.QRect(60, 122, 101, 21))
         self.label_2.setObjectName(_fromUtf8("label_2"))
         self.connect(self.pushButton, QtCore.SIGNAL("clicked()"), self.abrirEntrar) 
+        QtCore.QObject.connect(self.pushButton_2,QtCore.SIGNAL('clicked()'),QtGui.qApp, QtCore.SLOT('quit()'))
         self.retranslateUi(nivel)
         QtCore.QMetaObject.connectSlotsByName(nivel)
         

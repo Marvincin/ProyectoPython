@@ -1,3 +1,4 @@
+
 '''
 Created on 24/07/2013
 
@@ -15,6 +16,7 @@ Created on 24/07/2013
 
 from PyQt4 import QtCore, QtGui
 from qtablero import Ui_nivel
+from cargar import Ui_Dialog
 import sys
 #import images 
 
@@ -89,6 +91,7 @@ class Ui_principal(QtGui.QMainWindow):
         QtCore.QMetaObject.connectSlotsByName(principal)
         self.connect(self.pushButton_3,QtCore.SIGNAL('clicked()'),QtGui.qApp, QtCore.SLOT('quit()'))
         self.connect(self.pushButton, QtCore.SIGNAL("clicked()"), self.abrirEntrar)
+        self.connect(self.pushButton_2,  QtCore.SIGNAL("clicked()"), self.cargarpartida)
         #self.connect(self.pushButton, QtCore.SIGNAL("clicked()"), self.close)
         
         
@@ -101,6 +104,14 @@ class Ui_principal(QtGui.QMainWindow):
         principal.setVisible(False)
         nivel.show()
         ui1.exec_() 
+        
+    def cargarpartida(self):
+        cargar = QtGui.QMainWindow()
+        ui2 = Ui_Dialog()
+        ui2.setupUi(cargar)
+        principal.setVisible(False)
+        cargar.show()
+        ui2.exec_() 
         
     def retranslateUi(self, principal):
         principal.setWindowTitle(_translate("principal", "sudoku", None))
