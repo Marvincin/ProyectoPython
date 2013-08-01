@@ -1,14 +1,22 @@
+'''
+Created on 24/07/2013
+
+@author: xtreme
+'''
 # -*- coding: utf-8 -*-
 
 # Form implementation generated from reading ui file 'nivel.ui'
 #
-# Created: Sun Jul 21 14:40:51 2013
+# Created: Fri Jul 19 12:14:27 2013
 #      by: PyQt4 UI code generator 4.10.2
 #
 # WARNING! All changes made in this file will be lost!
 
-from PyQt4 import QtCore, QtGui
 
+from PyQt4 import QtCore, QtGui
+from qtablero import Ui_QTablero
+
+#import images
 try:
     _fromUtf8 = QtCore.QString.fromUtf8
 except AttributeError:
@@ -23,7 +31,7 @@ except AttributeError:
     def _translate(context, text, disambig):
         return QtGui.QApplication.translate(context, text, disambig)
 
-class Ui_nivel(object):
+class Ui_nivel(QtGui.QMainWindow):
     def setupUi(self, nivel):
         nivel.setObjectName(_fromUtf8("nivel"))
         nivel.resize(400, 295)
@@ -31,7 +39,7 @@ class Ui_nivel(object):
         self.pushButton.setGeometry(QtCore.QRect(50, 210, 60, 60))
         self.pushButton.setText(_fromUtf8(""))
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap(_fromUtf8(":/images/visto.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon.addPixmap(QtGui.QPixmap(_fromUtf8("./images/visto.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.pushButton.setIcon(icon)
         self.pushButton.setIconSize(QtCore.QSize(60, 60))
         self.pushButton.setObjectName(_fromUtf8("pushButton"))
@@ -39,7 +47,7 @@ class Ui_nivel(object):
         self.pushButton_2.setGeometry(QtCore.QRect(300, 210, 60, 60))
         self.pushButton_2.setText(_fromUtf8(""))
         icon1 = QtGui.QIcon()
-        icon1.addPixmap(QtGui.QPixmap(_fromUtf8(":/images/x.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon1.addPixmap(QtGui.QPixmap(_fromUtf8("./images/x.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.pushButton_2.setIcon(icon1)
         self.pushButton_2.setIconSize(QtCore.QSize(60, 60))
         self.pushButton_2.setObjectName(_fromUtf8("pushButton_2"))
@@ -62,9 +70,26 @@ class Ui_nivel(object):
         self.label_2 = QtGui.QLabel(nivel)
         self.label_2.setGeometry(QtCore.QRect(60, 122, 101, 21))
         self.label_2.setObjectName(_fromUtf8("label_2"))
-
+        self.connect(self.pushButton, QtCore.SIGNAL("clicked()"), self.abrirEntrar) 
         self.retranslateUi(nivel)
         QtCore.QMetaObject.connectSlotsByName(nivel)
+        
+    def abrirEntrar(self):
+        d=1
+        if self.facil.isChecked():
+            d=1
+        if self.medio.isChecked():
+            d=2
+        if self.dificil.isChecked():
+            d=3
+        qtablero = QtGui.QMainWindow()
+        ui1 = Ui_QTablero()
+        ui1.dif=d
+        ui1.nombre=self.nombretexto.text()
+        ui1.setupUi(qtablero)
+        nivel.setVisible(False)
+        qtablero.show()
+        ui1.exec_() 
 
     def retranslateUi(self, nivel):
         nivel.setWindowTitle(_translate("nivel", "Juego Nuevo", None))
@@ -75,12 +100,12 @@ class Ui_nivel(object):
         self.nombretexto.setText(_translate("nivel", "nombre del jugador", None))
         self.label_2.setText(_translate("nivel", "<html><head/><body><p><span style=\" font-size:12pt;\">Dificultad</span></p></body></html>", None))
 
-import images_rc
+
 
 if __name__ == "__main__":
     import sys
     app = QtGui.QApplication(sys.argv)
-    nivel = QtGui.QDialog()
+    nivel = QtGui.QMainWindow()
     ui = Ui_nivel()
     ui.setupUi(nivel)
     nivel.show()
