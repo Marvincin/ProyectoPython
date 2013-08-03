@@ -1,10 +1,11 @@
 
+# -*- coding: utf-8 -*-
 '''
 Created on 24/07/2013
 
 @author: xtreme
 '''
-# -*- coding: utf-8 -*-
+
 
 # Form implementation generated from reading ui file 'principal.ui'
 #
@@ -22,11 +23,6 @@ import sys
 
 
 
-try:
-    _fromUtf8 = QtCore.QString.fromUtf8
-except AttributeError:
-    def _fromUtf8(s):
-        return s
 
 try:
     _encoding = QtGui.QApplication.UnicodeUTF8
@@ -38,16 +34,16 @@ except AttributeError:
 
 class Ui_principal(QtGui.QMainWindow):
     def setupUi(self, principal):
-        principal.setObjectName(_fromUtf8("principal"))
+        principal.setObjectName("principal")
         principal.resize(400, 300)
         self.imagen = QtGui.QPushButton(principal)
         self.imagen.setGeometry(QtCore.QRect(-6, -8, 411, 311))
-        self.imagen.setText(_fromUtf8(""))
+        self.imagen.setText("")
         icon = QtGui.QIcon("./images/ININ.png")
-        icon.addPixmap(QtGui.QPixmap(_fromUtf8("./images/ININ.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon.addPixmap(QtGui.QPixmap("./images/ININ.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.imagen.setIcon(icon)
         self.imagen.setIconSize(QtCore.QSize(400, 300))
-        self.imagen.setObjectName(_fromUtf8("imagen"))
+        self.imagen.setObjectName("imagen")
         self.pushButton = QtGui.QPushButton(principal)
         self.pushButton.setGeometry(QtCore.QRect(30, 20, 91, 51))
         
@@ -60,7 +56,7 @@ class Ui_principal(QtGui.QMainWindow):
         font.setWeight(75)
         font.setStrikeOut(False)
         self.pushButton.setFont(font)
-        self.pushButton.setObjectName(_fromUtf8("pushButton"))
+        self.pushButton.setObjectName("pushButton")
         self.pushButton_2 = QtGui.QPushButton(principal)
         self.pushButton_2.setGeometry(QtCore.QRect(270, 60, 111, 41))
         font = QtGui.QFont()
@@ -68,7 +64,7 @@ class Ui_principal(QtGui.QMainWindow):
         font.setBold(True)
         font.setWeight(75)
         self.pushButton_2.setFont(font)
-        self.pushButton_2.setObjectName(_fromUtf8("pushButton_2"))
+        self.pushButton_2.setObjectName("pushButton_2")
         self.pushButton_3 = QtGui.QPushButton(principal)
         self.pushButton_3.setGeometry(QtCore.QRect(270, 240, 121, 41))
     
@@ -77,7 +73,7 @@ class Ui_principal(QtGui.QMainWindow):
         font.setBold(True)
         font.setWeight(75)
         self.pushButton_3.setFont(font)
-        self.pushButton_3.setObjectName(_fromUtf8("pushButton_3"))
+        self.pushButton_3.setObjectName("pushButton_3")
         
         self.pushButton_4 = QtGui.QPushButton(principal)
         self.pushButton_4.setGeometry(QtCore.QRect(10, 150, 141, 41))
@@ -86,7 +82,7 @@ class Ui_principal(QtGui.QMainWindow):
         font.setBold(True)
         font.setWeight(75)
         self.pushButton_4.setFont(font)
-        self.pushButton_4.setObjectName(_fromUtf8("pushButton_4"))
+        self.pushButton_4.setObjectName("pushButton_4")
         self.retranslateUi(principal)
         QtCore.QMetaObject.connectSlotsByName(principal)
         self.connect(self.pushButton_3,QtCore.SIGNAL('clicked()'),QtGui.qApp, QtCore.SLOT('quit()'))
