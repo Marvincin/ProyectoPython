@@ -19,7 +19,7 @@ from PyQt4 import QtCore, QtGui
 from qtablero import Ui_nivel
 from cargar import Ui_Dialog
 import sys
-#import images 
+ 
 
 
 
@@ -46,8 +46,6 @@ class Ui_principal(QtGui.QMainWindow):
         self.imagen.setObjectName("imagen")
         self.pushButton = QtGui.QPushButton(principal)
         self.pushButton.setGeometry(QtCore.QRect(30, 20, 91, 51))
-        
-        
         font = QtGui.QFont()
         font.setPointSize(15)
         font.setBold(True)
@@ -67,14 +65,12 @@ class Ui_principal(QtGui.QMainWindow):
         self.pushButton_2.setObjectName("pushButton_2")
         self.pushButton_3 = QtGui.QPushButton(principal)
         self.pushButton_3.setGeometry(QtCore.QRect(270, 240, 121, 41))
-    
         font = QtGui.QFont()
         font.setPointSize(15)
         font.setBold(True)
         font.setWeight(75)
         self.pushButton_3.setFont(font)
         self.pushButton_3.setObjectName("pushButton_3")
-        
         self.pushButton_4 = QtGui.QPushButton(principal)
         self.pushButton_4.setGeometry(QtCore.QRect(10, 150, 141, 41))
         font = QtGui.QFont()
