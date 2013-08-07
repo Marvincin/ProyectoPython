@@ -1,0 +1,14 @@
+var searchData=
+[
+  ['partidaguardada',['partidaGuardada',['../classqtablero_1_1_ui___q_tablero.html#ae71dd754996e0e3f7c1a25ac4f7b451a',1,'qtablero::Ui_QTablero']]],
+  ['partidanueva',['partidanueva',['../classqtablero_1_1_ui___q_tablero.html#aeb7b0492a7ee334c574df20eb83428ac',1,'qtablero::Ui_QTablero']]],
+  ['principal',['principal',['../namespaceprincipal.html',1,'principal'],['../namespaceprincipal.html#aeef54f670c77403b3ab472b811107fe2',1,'principal.principal()']]],
+  ['principal_2epy',['principal.py',['../principal_8py.html',1,'']]],
+  ['puntaje',['puntaje',['../classcargar_1_1_ui___dialog.html#ad6a2c00f540d2768c75799a73ed43b52',1,'cargar::Ui_Dialog']]],
+  ['puntos',['puntos',['../classqtablero_1_1_ui___q_tablero.html#a56df53f92596bb53cac4f14869d8b94a',1,'qtablero::Ui_QTablero']]],
+  ['pushbutton',['pushButton',['../classcargar_1_1_ui___dialog.html#a1310058a67ab4e7ff0c97f2060d7b4d9',1,'cargar.Ui_Dialog.pushButton()'],['../classprincipal_1_1_ui__principal.html#a0839cea815ed36590c4b412c5bce9e39',1,'principal.Ui_principal.pushButton()'],['../classqtablero_1_1_ui___q_tablero.html#a5fb0df7e9ca16b83ecb16c4a0ab4f484',1,'qtablero.Ui_QTablero.pushButton()'],['../classqtablero_1_1_ui__nivel.html#a74bfff0bfedadf19aa5a940afc57e888',1,'qtablero.Ui_nivel.pushButton()'],['../classraking_1_1_ui___dialog.html#a2157c875e4af69c97f0df915898c97cf',1,'raking.Ui_Dialog.pushButton()']]],
+  ['pushbutton_5f2',['pushButton_2',['../classcargar_1_1_ui___dialog.html#a0ade8bd3acf03943bae0ad48ace4e672',1,'cargar.Ui_Dialog.pushButton_2()'],['../classprincipal_1_1_ui__principal.html#aa3c92f8953d159cbfdd0f6d5e50fad0c',1,'principal.Ui_principal.pushButton_2()'],['../classqtablero_1_1_ui___q_tablero.html#af16469d7b131ffc4842c8cc30aa23d1a',1,'qtablero.Ui_QTablero.pushButton_2()'],['../classqtablero_1_1_ui__nivel.html#ae8cc74f98ea13b75f1229af6ae8ae6e2',1,'qtablero.Ui_nivel.pushButton_2()'],['../classraking_1_1_ui___dialog.html#aea0966842c358c164b7e512f90cd8005',1,'raking.Ui_Dialog.pushButton_2()']]],
+  ['pushbutton_5f3',['pushButton_3',['../classcargar_1_1_ui___dialog.html#a06c26ed39bb62e4eade383758131d326',1,'cargar.Ui_Dialog.pushButton_3()'],['../classprincipal_1_1_ui__principal.html#a80640ffbe80ff9eab65eced7627f6820',1,'principal.Ui_principal.pushButton_3()'],['../classqtablero_1_1_ui___q_tablero.html#a66fde1b863a3b75f6199b93ff491a2dd',1,'qtablero.Ui_QTablero.pushButton_3()']]],
+  ['pushbutton_5f4',['pushButton_4',['../classprincipal_1_1_ui__principal.html#a55729800be56f8a06417f93d76778237',1,'principal.Ui_principal.pushButton_4()'],['../classqtablero_1_1_ui___q_tablero.html#a6b47384da1e3ecb6eaa0bc1560fa0e62',1,'qtablero.Ui_QTablero.pushButton_4()']]],
+  ['pushbutton_5f6',['pushButton_6',['../classqtablero_1_1_ui___q_tablero.html#aa67fe0ba47b34ad24e190e0d1e3bbdd8',1,'qtablero::Ui_QTablero']]]
+];

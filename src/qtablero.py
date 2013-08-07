@@ -22,7 +22,7 @@ import time
 import threading
 import sys
 import base64
-
+#Declaracion global de las variables que trabajaran con el tiempo para el cronometro del juego
 global segundos
 segundos =0
 global minutos
@@ -38,10 +38,15 @@ except AttributeError:
         return QtGui.QApplication.translate(context, text, disambig)
 
 class Ui_QTablero(QtGui.QMainWindow):
+    #Valores por  defecto para el nombre y dificultad del juego
     nombre="hola_q_hace"
     dif=1
    
     def setupUiCargar(self, QTablero, Nombre, ListaC, ListaU, Min, Seg, Puntaje,Habilitados):
+        '''
+        Conversion de la interfaz grafica de Qt a codigo python, el cual nos carga la ventana principal del juego
+        Este es un tipo de constructor diferente ya que recibe los datos de una partida anteriormente guardada.
+        '''
         QTablero.setObjectName("QTablero")
         QTablero.resize(750, 522)
         QTablero.setAcceptDrops(True)
@@ -171,7 +176,7 @@ class Ui_QTablero(QtGui.QMainWindow):
         self.pushButton_6.setIcon(icon3)
         self.pushButton_6.setIconSize(QtCore.QSize(50, 50))
         self.pushButton_6.setObjectName("pushButton_6")
-        QtCore.QObject.connect(self.pushButton_6,QtCore.SIGNAL('clicked()'),QtGui.qApp, QtCore.SLOT('quit()'))
+        QtCore.QObject.connect(self.pushButton_6,QtCore.SIGNAL('clicked()'),QtGui.qApp, QtCore.SLOT('quit()'))#para salir de la aplicacion
         self.label = QtGui.QLabel(self.centralWidget)
         self.label.setGeometry(QtCore.QRect(540, 120, 161, 31))
         font = QtGui.QFont()
@@ -240,13 +245,16 @@ class Ui_QTablero(QtGui.QMainWindow):
         global minutos
         segundos=int(Seg)
         minutos=int(Min)
-        self.connect(self.pushButton, QtCore.SIGNAL("clicked()"), self.ayudaboton)
-        self.connect(self.pushButton_4, QtCore.SIGNAL("clicked()"), self.guardar)
-        self.connect(self.pushButton_6, QtCore.SIGNAL("clicked()"), self.salir)
+        self.connect(self.pushButton, QtCore.SIGNAL("clicked()"), self.ayudaboton)#Boton de ayuda en el juego
+        self.connect(self.pushButton_4, QtCore.SIGNAL("clicked()"), self.guardar)#Boton para guardar partida
+        self.connect(self.pushButton_6, QtCore.SIGNAL("clicked()"), self.salir)#Boton para salir del juego
         QtCore.QMetaObject.connectSlotsByName(QTablero)
         self.ll= QtGui.QLineEdit()
         
     def setupUi(self, QTablero):
+        '''
+        Conversion de la interfaz grafica del tablero del juego para una nueva partida, pasada del archivo Qt a codigo python
+        '''
         QTablero.setObjectName("QTablero")
         QTablero.resize(750, 522)
         QTablero.setAcceptDrops(True)
